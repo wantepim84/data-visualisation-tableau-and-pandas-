@@ -1,0 +1,86 @@
+#Import the file named users-socialmedia.csv:
+
+# 1- Import the pandas library
+# 2- Create a variable that contains your dataframe file name (dont' forget to put as well the file extension)
+# 3- Use the method pd.read_csv()to read your file
+# 4- Explore your imported dataframe with the head() method
+
+
+Task 1: Importing and exploring data with the Python pandas library:
+
+import pandas as pd
+
+#How many columns and rows has the dataframe? Use appropriate exploration functions 
+
+users_socialmedia.shape
+
+#How many missing values the dataframe has? Use appropriate exploration functions 
+
+users_socialmedia.info()
+
+Task 2: Data selection and filtering:
+
+#Select the column named "entity"
+
+users_socialmedia[['Entity']]
+
+#Rename the column 'Entity' to 'Social media App'
+
+u2=users_socialmedia.rename(columns={'Entity': 'Social media App'})
+u2
+
+#Drop the column named 'Code' from the dataframe
+
+users_socialmedia.drop('Code', axis=1)
+
+#Filter the data by displaying all data with date >2018
+
+users_socialmedia[users_socialmedia['Year']>2018]
+
+#Count how many unique values there is in the 'Social media App' column
+
+u2['Social media App'].value_counts()
+
+Task 3: Data calculation and plotting
+
+#Calculate the mean of Monthly active users per Social media App using the groupby() method, # and the mean calculation (proceed in mutliple steps)
+
+u3=u2.groupby('Social media App')['Monthly active users']
+u3.mean()
+
+#Plot the Social media App along with their Monthly active users using the seaborn library:
+
+# 1-Import the seaborn library
+
+import seaborn as sns
+
+# 2- Define your x and y axis to feed the sns.barplot() function
+
+plot=sns.barplot(data=u2, x='Social media App', y= 'Monthly active users')
+
+#Resize plot using Matplotlib
+
+import matplotlib.pyplot as plt
+plt.figure(figsize=(20,10))
+sns.barplot(data=u2, x='Social media App', y='Monthly active users')
+plt.show()
+
+#Comments the graph regarding the number of monthly active users across different social media apps:
+# Which social media apps have the highest and lowest number of active users per month?
+
+plt.figure(figsize=(20,10))
+sns.barplot(data=user1, x='Social media App', y='Monthly active users')
+plt.show()
+# Based on the graph, Facebook has the most monthly active user whereas Friendster has the least.
+
+#Calculate the mean of Monthly active users per Social media App and per year using the groupby() method:
+
+u2.groupby('Social media App')['Monthly active users'].mean()
+
+Advance plotting:
+
+df=u2.groupby(["Social media App", "Year"],as_index=False)["Monthly active users"].mean()
+plt.figure(figsize=(20,10))
+sns.barplot(data=df, x='Year', y='Monthly active users', hue= "Social media App")
+plt.legend(loc='upper left')
+plt.show()
